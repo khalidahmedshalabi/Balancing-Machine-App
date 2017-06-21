@@ -1,0 +1,1082 @@
+html, body {
+    height: 100%;
+}
+
+/* HelveticaNeue-Thin */
+@font-face {
+    font-family: 'HelveticaNeue';
+    font-weight: normal;
+    font-style: normal;
+    src: url("../fonts/families/HelveticaNeue-Thin.otf") format("opentype");
+}
+
+body
+{
+    padding: 0;
+	margin:0;
+    background: white;
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
+    color: white;
+    font-family: Arial;
+}
+
+section
+{
+    width: 100%;
+    border-bottom-style: solid;
+    border-bottom-color: rgba(255, 255, 255, 0.4);
+    border-bottom-width: thin;
+}
+
+.message_box
+{
+    display: inline-block;
+    text-align: justify;
+    position: fixed;
+    font-size: 120%;
+    width: 50%;
+    top: 5%;
+    left: 25%;
+    background-color: white;
+    padding: 2%;
+    border-radius: 2px;
+    font-family: 'HelveticaNeue';
+    -webkit-box-shadow: 4px 6px 18px -3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 6px 18px -3px rgba(0,0,0,0.75);
+    box-shadow: 4px 6px 18px -3px rgba(0,0,0,0.75);
+    z-index: 2;
+}
+
+.message_box_close
+{
+    position: absolute; top: 4%; right: 3%; font-size: 150%;
+}
+
+.icon
+{
+    font-size: 150%;
+    padding: 10px;
+    border-radius: 50px;
+    border-color: white;
+    border-width: thin;
+    border-style: solid;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.report_cover
+{
+    display: none;
+    font-family: arial;
+    background-color: white;
+    color: black;
+    width: 100%;
+    padding: 1%;
+}
+
+.report_cover p
+{
+    margin-top: 0%;
+    margin-bottom: 0%;
+}
+
+.balancing_calc_hidden_title
+{
+    display: none;
+    text-align: left;
+    font-size: 18pt;
+    font-family: arial;
+    margin-bottom: 4%;
+    width: 100%;
+    font-weight: bold;
+}
+
+.section_title
+{
+    display: block;
+    text-align: center;
+    font-size: 350%;
+    font-family: 'HelveticaNeue';
+    margin-top: 1%;
+    margin-bottom: 3%;
+    width: 100%;
+}
+
+.section_sub_title
+{
+    display: block;
+    text-align: center;
+    font-size: 170%;
+    font-family: 'HelveticaNeue';
+    margin-top: 1%;
+    margin-bottom: 3%;
+    width: 100%;
+}
+
+.section_editing .section_sub_title, .section_writings .section_sub_title
+{
+    text-align: left;
+}
+
+.scroller
+{
+    display: inline-block;
+    text-align: left;
+    position: fixed;
+    right: 0%;
+    bottom: 0%;
+    background-color: rgba(255, 255, 255, 0.4);
+    padding: 1.5%;
+    border-top-left-radius: 7px;
+    font-family: 'HelveticaNeue';
+    cursor: pointer;
+    z-index: 2;
+}
+
+.scroller .fa
+{
+    font-size: 230%;
+}
+
+.scroller_list
+{
+    font-size:120%;
+}
+
+.scroller_list li
+{
+    background-color: rgba(0, 0, 0, 0.06);
+    padding: 2%;
+    border-radius: 5px;
+    margin: 2%;
+    font-weight: bolder;
+}
+
+.scroller_list li:hover
+{
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.scroller:hover
+{
+    animation-name: scroller_anim;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+@keyframes scroller_anim
+{
+    to
+    {
+        background-color: white;
+    }
+}
+
+.gradient_bg
+{
+    background: rgba(237,237,237,1);
+    background: -moz-linear-gradient(45deg, rgba(237,237,237,1) 0%, rgba(246,246,246,0.97) 53%, rgba(255,255,255,0.97) 66%, rgba(255,255,255,0.95) 100%);
+    background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(237,237,237,1)), color-stop(53%, rgba(246,246,246,0.97)), color-stop(66%, rgba(255,255,255,0.97)), color-stop(100%, rgba(255,255,255,0.95)));
+    background: -webkit-linear-gradient(45deg, rgba(237,237,237,1) 0%, rgba(246,246,246,0.97) 53%, rgba(255,255,255,0.97) 66%, rgba(255,255,255,0.95) 100%);
+    background: -o-linear-gradient(45deg, rgba(237,237,237,1) 0%, rgba(246,246,246,0.97) 53%, rgba(255,255,255,0.97) 66%, rgba(255,255,255,0.95) 100%);
+    background: -ms-linear-gradient(45deg, rgba(237,237,237,1) 0%, rgba(246,246,246,0.97) 53%, rgba(255,255,255,0.97) 66%, rgba(255,255,255,0.95) 100%);
+    background: linear-gradient(45deg, rgba(237,237,237,1) 0%, rgba(246,246,246,0.97) 53%, rgba(255,255,255,0.97) 66%, rgba(255,255,255,0.95) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#ffffff', GradientType=1 );
+}
+
+.ribbon
+{
+    font-family: 'HelveticaNeue';
+    width: 100%;
+    text-align: left;
+    font-size: 87%;
+}
+
+.ribbon_button
+{
+    font-weight: bolder;
+    display: inline-block;
+    cursor: pointer;
+    margin: 0.5%;
+    background-color: rgba(0, 0, 0, 0.06);
+    padding: 0.4%;
+    border-radius: 5px;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.ribbon_button:first-of-type
+{
+    margin-left: 2%;
+}
+
+.color_menu
+{
+    float: right;
+    padding-right: 1%;
+    padding-top: 0.3%;
+}
+
+.color
+{
+    cursor: pointer;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 12px;
+    border-color: transparent;
+    border-width: thick;
+    border-style: solid;
+}
+
+.color:hover
+{
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.section_settings
+{
+    padding-top: 2%;
+    padding-bottom: 2.5%;
+    text-align: center;
+}
+
+.customization_button
+{
+    font-family: 'HelveticaNeue';
+    border: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0.5%;
+    border-style: solid;
+    border-width: thin;
+    border-color: rgba(255, 255, 255, 0.2);
+    display: inline-block;
+    font-size: 110%;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.customization_button:hover
+{
+    font-weight: bolder;
+    border-color: rgba(255, 255, 255, 0.9);
+}
+
+.section_input
+{
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.section_input_table
+{
+    font-family: arial;
+    text-align: left;
+    width: 93%;
+    display: inline-table;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    border-spacing: 0px;
+    border-radius: 0px;
+    border-spacing: 8px;
+}
+
+.input_done_button
+{
+    margin-top: 3%;
+}
+
+.unit_label
+{
+    font-family: arial;
+    font-weight: bold;
+    font-size: 85%;
+    display: inline;
+    border: 0px;
+    background-color: rgba(255, 255, 255, 0.09);
+    border-radius: 7px;
+    cursor: default;
+    padding: 3px;
+    border-style: solid;
+    border-width: thin;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.advisable_calib_weight
+{
+    font-family: 'HelveticaNeue';
+    display: inline-block;
+    padding: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    border-radius: 2px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    -webkit-animation: flickerAnimation 3s infinite;
+   -moz-animation: flickerAnimation 3s infinite;
+   -o-animation: flickerAnimation 3s infinite;
+    animation: flickerAnimation 3s infinite;
+}
+
+@keyframes flickerAnimation
+{
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
+}
+
+@-o-keyframes flickerAnimation
+{
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
+}
+
+@-moz-keyframes flickerAnimation
+{
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
+}
+
+@-webkit-keyframes flickerAnimation
+{
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
+}
+
+.input_label
+{
+    width: 80%;
+    text-align: center;
+    font-family: arial;
+    display: block;
+    border: 0px;
+    background-color: rgba(255, 255, 255, 0.09);
+    border-radius: 2px;
+    cursor: default;
+    padding: 7px;
+    border-style: solid;
+    border-width: medium;
+    border-color: rgba(255, 255, 255, 0.1);
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-right-color: rgba(255, 255, 255, 0.03);
+    border-right-width: thick;
+}
+
+input[type="text"]
+{
+    font-family: arial;
+    font-size: 11pt;
+    color: black;
+    border: 0px;
+    border-bottom-style: solid;
+    border-bottom-color: rgba(255, 255, 255, 0.5);
+    border-bottom-width: medium;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 2px;
+    text-align: center;
+    padding: 1px;
+    height: 22px;
+    width: 60%;
+}
+
+.drawing input[type="text"]
+{
+    width: 20%;
+}
+
+input[type="text"]:disabled
+{
+    background-color: rgba(255, 255, 255, 0.2);
+    color: black;
+}
+input[type="text"]:disabled:hover
+{
+    background-color: rgba(255, 255, 255, 0.1);
+    border-bottom-color: rgba(255, 255, 255, 0.4);
+}
+
+input[type="text"]:hover
+{
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+input[type="text"]:focus
+{
+    animation-name: input_text_anim;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+@keyframes input_text_anim
+{
+    to
+    {
+        background-color: rgba(255, 255, 255, 0.8);
+        border-bottom-color: rgba(255, 255, 255, 1.0);
+    }
+}
+
+select
+{
+    display: inline-block;
+    font-family: arial;
+    font-size: 11pt;
+    color: black;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border: none;
+    border-radius: 5px;
+}
+/* Remove button padding in FF
+select::-moz-focus-inner
+{
+    border: 0;
+    padding: 0;
+}
+@-moz-document url-prefix()
+{
+    select
+    {
+        padding: 0px 0!important;
+    }
+}
+*/
+.drawing
+{
+    padding-bottom: 3%;
+}
+
+.draw
+{
+    background: white;
+    border-radius: 4px;
+    /*-webkit-box-shadow: 4px 6px 18px -3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 6px 18px -3px rgba(0,0,0,0.75);
+    box-shadow: 4px 6px 18px -3px rgba(0,0,0,0.75);*/
+    margin-bottom: 1%;
+    cursor: crosshair;
+}
+
+.papers
+{
+    -webkit-box-shadow:
+        1px 1px   0 rgba(0,   0,   0,   0.2),
+        3px 3px   0 rgba(255, 255, 255, 1.0),
+        4px 4px   0 rgba(0,   0,   0,   0.225),
+        6px 6px   0 rgba(255, 255, 255, 1.0),
+        7px 7px   0 rgba(0,   0,   0,   0.250),
+        9px 9px   0 rgba(255, 255, 255, 1.0),
+        10px 10px 0 rgba(0,   0,   0,   0.275),
+        4px 6px 21px 3px rgba(0,0,0,0.75);
+    -moz-box-shadow:
+        1px 1px   0 rgba(0,   0,   0,   0.2),
+        3px 3px   0 rgba(255, 255, 255, 1.0),
+        4px 4px   0 rgba(0,   0,   0,   0.225),
+        6px 6px   0 rgba(255, 255, 255, 1.0),
+        7px 7px   0 rgba(0,   0,   0,   0.250),
+        9px 9px   0 rgba(255, 255, 255, 1.0),
+        10px 10px 0 rgba(0,   0,   0,   0.275),
+        4px 6px 21px 3px rgba(0,0,0,0.75);
+    box-shadow:
+        1px 1px   0 rgba(0,   0,   0,   0.2),
+        3px 3px   0 rgba(255, 255, 255, 1.0),
+        4px 4px   0 rgba(0,   0,   0,   0.225),
+        6px 6px   0 rgba(255, 255, 255, 1.0),
+        7px 7px   0 rgba(0,   0,   0,   0.250),
+        9px 9px   0 rgba(255, 255, 255, 1.0),
+        10px 10px 0 rgba(0,   0,   0,   0.275),
+        4px 6px 21px 3px rgba(0,0,0,0.75);
+}
+
+/*.papers:hover
+{
+    animation-name: papers_anim;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+@keyframes papers_anim
+{
+    to
+    {
+        -webkit-box-shadow:
+            1px 1px   0 rgba(0,   0,   0,   0.4),
+            3px 3px   0 rgba(255, 255, 255, 1.0),
+            4px 4px   0 rgba(0,   0,   0,   0.225),
+            6px 6px   0 rgba(255, 255, 255, 1.0),
+            7px 7px   0 rgba(0,   0,   0,   0.250),
+            9px 9px   0 rgba(255, 255, 255, 1.0),
+            10px 10px 0 rgba(0,   0,   0,   0.275),
+            4px 6px 26px 7px rgba(0,0,0,0.75);
+        -moz-box-shadow:
+            1px 1px   0 rgba(0,   0,   0,   0.4),
+            3px 3px   0 rgba(255, 255, 255, 1.0),
+            4px 4px   0 rgba(0,   0,   0,   0.225),
+            6px 6px   0 rgba(255, 255, 255, 1.0),
+            7px 7px   0 rgba(0,   0,   0,   0.250),
+            9px 9px   0 rgba(255, 255, 255, 1.0),
+            10px 10px 0 rgba(0,   0,   0,   0.275),
+            4px 6px 26px 7px rgba(0,0,0,0.75);
+        box-shadow:
+            1px 1px   0 rgba(0,   0,   0,   0.4),
+            3px 3px   0 rgba(255, 255, 255, 1.0),
+            4px 4px   0 rgba(0,   0,   0,   0.225),
+            6px 6px   0 rgba(255, 255, 255, 1.0),
+            7px 7px   0 rgba(0,   0,   0,   0.250),
+            9px 9px   0 rgba(255, 255, 255, 1.0),
+            10px 10px 0 rgba(0,   0,   0,   0.275),
+            4px 6px 26px 7px rgba(0,0,0,0.75);
+    }
+}*/
+
+.plane_settings_container
+{
+    display: inline-table;
+    width: 90%;
+    text-align: left;
+}
+
+.plane_single_axis
+{
+    float: left;
+    width: 50%;
+}
+
+.nav_tabs
+{
+    font-family: 'HelveticaNeue';
+    width: 100%;
+    text-align: center;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.tab
+{
+    font-size: 110%;
+    display: inline-block;
+    padding: 1%;
+    border-radius: 13px;
+    border-style: solid;
+    border-width: thin;
+    cursor: pointer;
+    margin: 0.5%;
+}
+
+.table_graph_checkboxes_container
+{
+    font-family: 'HelveticaNeue';
+    display: block;
+    font-size: 110%;
+}
+
+.table_graph_checkboxes_container input[type="checkbox"]
+{
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+
+.table_graph_checkboxes_container span
+{
+    border: thin solid rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    padding: 1.5%;
+}
+
+.table_graph_single_checkbox
+{
+    text-align: center;
+    float: left;
+    margin-bottom: 3%;
+}
+
+.graph
+{
+    background: white;
+}
+
+.graph_container
+{
+    display: block;
+    width: 90%;
+    margin: auto;
+    margin-bottom: 7%;
+    text-align: center;
+    max-height: 45%;
+    padding: 1%;
+    background: white;
+    border-radius: 4px;
+    border: thin solid #888888;
+
+}
+
+.graph_config_table
+{
+    font-family: arial;
+    text-align: left;
+    width: 93%;
+    display: inline-table;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    border-spacing: 0px;
+    border-radius: 0px;
+    border-spacing: 8px;
+    margin-bottom: 2%;
+}
+
+.graph_instructions
+{
+    font-family: Arial;
+    display: inline-block;
+    text-align: center;
+    background: white;
+    color: #000000;
+    font-weight: bolder;
+    width: 100%;
+    padding-top: 1%;
+    padding-bottom: 2%;
+    font-size: 60%;
+}
+
+.graph_instructions span
+{
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.graph_table
+{
+    font-family: arial;
+    width: 95%;
+    display: inline-table;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    border-spacing: 3px;
+    border-radius: 3px;
+    margin-bottom: 5%;
+    color: #444444;
+}
+
+.graph_table tr
+{
+    border: thin solid rgba(255, 255, 255, 0.1);
+}
+
+.graph_table th
+{
+    font-weight: normal;
+    font-size: 120%;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 0.5%;
+    border-radius: 2px;
+}
+
+.graph_table th:hover
+{
+    background-color: white;
+}
+
+.graph_table td
+{
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 2px;
+}
+
+.graph_table td:hover
+{
+    background-color: rgba(255, 255, 255, 0.9);
+    font-weight: bolder;
+}
+
+.summary
+{
+    font-family: arial;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 90%;
+    border: thin solid rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    color: #999999;
+    padding: 0.5%;
+    text-align: justify;
+    margin-bottom: 2%;
+}
+
+.section_editing
+{
+    text-align: left;
+    padding-left: 2%;
+}
+
+.summary:focus
+{
+    animation-name: summary_anim;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    outline: 0;
+}
+
+@keyframes summary_anim
+{
+    to
+    {
+        background-color: white;
+        border-radius: 17px;
+        color: #333333;
+        padding: 1%;
+    }
+}
+
+.section_tableofcontent
+{
+    display: none;
+    font-family: arial;
+    background-color: white;
+    color: black;
+    width: 100%;
+    padding: 1%;
+}
+
+.section_tableofcontent p
+{
+    margin-top: 0%;
+    margin-bottom: 0%;
+}
+
+.section_writings
+{
+    text-align: left;
+    display: none;
+}
+
+.hidden_writings_container
+{
+    padding-top: 10%;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.hidden_writing
+{
+    font-family: arial;
+    font-size: 12pt;
+    resize: none;
+    display: block;
+    background-color: white;
+    width: 100%;
+    border: 0;
+    color: black;
+    text-align: justify;
+}
+
+.img_exporter
+{
+    display: none;
+    margin: 0 auto;
+    text-align: center;
+    position: fixed;
+    width: 50%;
+    top: 10%;
+    left: 25%;
+    background-color: white;
+    color: #555555;
+    padding: 1%;
+    border-radius: 2px;
+    font-family: 'HelveticaNeue';
+    -webkit-box-shadow: 4px 6px 18px -3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 6px 18px -3px rgba(0,0,0,0.75);
+    box-shadow: 4px 6px 18px -3px rgba(0,0,0,0.75);
+    z-index: 2;
+}
+
+.img_exporter ul
+{
+    margin-top: 10%;
+    text-align: left;
+}
+
+.img_exporter li
+{
+    background-color: rgba(0, 0, 0, 0.06);
+    padding: 2%;
+    border-radius: 5px;
+    margin: 1%;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.img_exporter li:hover
+{
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.img_exporter_close
+{
+    cursor: pointer;
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    font-size: 200%;
+}
+
+.project_loader
+{
+    display: none;
+    margin: 0 auto;
+    text-align: center;
+    position: fixed;
+    width: 50%;
+    top: 15%;
+    left: 25%;
+    background-color: white;
+    color: #555555;
+    padding: 1%;
+    border-radius: 2px;
+    font-family: 'HelveticaNeue';
+    -webkit-box-shadow: 4px 6px 18px -3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 6px 18px -3px rgba(0,0,0,0.75);
+    box-shadow: 4px 6px 18px -3px rgba(0,0,0,0.75);
+    z-index: 2;
+}
+
+.project_loader_close
+{
+    cursor: pointer;
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    font-size: 200%;
+}
+
+.info_dialog
+{
+    display: inline-block;
+    text-align: justify;
+    position: fixed;
+    width: 50%;
+    height: 70%;
+    overflow: auto;
+    top: 10%;
+    left: 25%;
+    background-color: white;
+    color: #555555;
+    padding: 1%;
+    border-radius: 2px;
+    font-family: arial;
+    -webkit-box-shadow: 4px 6px 18px -3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 6px 18px -3px rgba(0,0,0,0.75);
+    box-shadow: 4px 6px 18px -3px rgba(0,0,0,0.75);
+    z-index: 2;
+}
+
+.info_dialog p
+{
+    margin-top: 0%;
+    margin-bottom: 0%;
+}
+
+
+.info_dialog_close
+{
+    cursor: pointer;
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    font-size: 200%;
+}
+
+.print_page_num
+{
+    text-align: right;
+    padding-top: 2%;
+    padding-right: 7%;
+    color: #444444;
+    font-size: 9pt;
+}
+
+.config_naming_button
+{
+    padding: 2%;
+    border-radius: 3px;
+    border: thin solid rgba(255, 255, 255, 0.5);
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+}
+
+.config_naming_button:hover
+{
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.close_naming_config
+{
+    position: absolute;
+    top: 3%;
+    right: 3%;
+    color: #222222;
+    font-size: 180%;
+    cursor: pointer;
+    background-color: #EEEEEE;
+    border-radius: 50%;
+    padding: 1%;
+}
+
+.naming_config_container
+{
+    display: none;
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 3;
+}
+
+.naming_config
+{
+    display: inline-block;
+    width: 80%;
+    height: 100%;
+    background-color: #EEEEEE;
+    color: #111111;
+}
+
+.naming_config_table
+{
+    margin-top: 10%;
+    width: 90%;
+    display: inline-table;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    border-spacing: 0px;
+    border-radius: 0px;
+}
+
+.naming_config_table th
+{
+    padding: 1%;
+    border-bottom: thin solid #111111;
+}
+
+.naming_config_table td
+{
+    padding: 1%;
+}
+
+.input_workspace_name
+{
+    width: 100% !important;
+    border-radius: 7px !important;
+    border: thin dotted black !important;
+}
+
+footer
+{
+    font-family: 'HelveticaNeue';
+    background-color: white;
+    text-align: center;
+    color: black;
+    font-size: 90%;
+    padding: 1%;
+}
+
+.welcome_screen
+{
+    display: none;
+    font-family: 'HelveticaNeue';
+    width: 100%;
+    min-height: 100%;
+    background-color: #EEEEEE;
+    top: 0%;
+    left: 0%;
+    text-align: center;
+    color: #198AB0;
+    z-index: 4;
+    padding-top: 1%;
+}
+
+.welcome_screen h1
+{
+    font-size: 400%;
+    margin: 0;
+    margin-top: 1%;
+    margin-bottom: 3%;
+}
+
+.welcome_screen p
+{
+    margin: 0;
+    font-size: 120%;
+    display: inline-block;
+    width: 70%;
+    text-align: justify;
+}
+
+.welcome_button
+{
+    cursor: pointer;
+    font-family: 'HelveticaNeue';
+    display: inline-block;
+    width: 30%;
+    padding: 2%;
+    margin-top: 2%;
+    border-radius: 50px;
+    text-align: center;
+    background-color: #198AB0;
+    color: white;
+    font-size: 200%;
+    -webkit-animation: flickerAnimation 3s infinite;
+   -moz-animation: flickerAnimation 3s infinite;
+   -o-animation: flickerAnimation 3s infinite;
+    animation: flickerAnimation 3s infinite;
+}
+
+.welcome_button:hover
+{
+    background-color: white;
+    color: #198AB0;
+
+    -webkit-animation: none;
+   -moz-animation: none;
+   -o-animation: none;
+    animation: none;
+}

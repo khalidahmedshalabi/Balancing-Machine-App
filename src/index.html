@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="application-name" content="Balancing Machine App For Engineers">
+		<meta name="author" content="Mustafa Shalabi, Khalid Ahmed Shalabi">
+		<meta name="description" content="This balancing machine app determines the location and amount of unbalanced masses on a rotor based on given inputs and readings. ">
+		<meta name="keywords" content="engineer, balancing, machine, unbalance, vibration, balancing machine, rotor, rotary machine, turbine, general electric, bently nevada
+		calibration weight, correction weight, vibration comparison, polar graph, single-plane balancing calculator, double-plane balancing calculator">
+
+		<title>Balancing Machine App</title>
+
+		<script src="js/jquery-3.1.0.min.js"></script>
+		<script src="js/jcanvas.min.js"></script>
+		<script src="js/velocity.min.js"></script>
+		<script src="js/Chart.bundle.min.js"></script>
+		<script src="js/picker/picker.js"></script>
+		<script src="js/picker/legacy.js"></script>
+		<script src="js/picker/picker.date.js"></script>
+		<script src="js/Blob.js"></script>
+		<script src="js/FileSaver.js"></script>
+		<script src="js/canvas-toBlob.js"></script>
+		<script src="js/jspdf/jspdf.min.js"></script>
+		<script src="js/html2canvas.js"></script>
+		<script src="js/autosize.min.js"></script>
+		<script src="js/firstImpression.min.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<link rel="stylesheet" type="text/css" href="css/print.css">
+		<link rel="stylesheet" type="text/css" href="js/picker/themes/default.css">
+		<link rel="stylesheet" type="text/css" href="js/picker/themes/default.date.css">
+		<link rel="stylesheet" type="text/css" href="css/hover.css">
+		<link rel="stylesheet" type="text/css" href="css/responsive.css">
+	</head>
+
+	<body>
+		<audio id="audio_color_change">
+			<source src="audio/color_change.mp3" type="audio/mpeg">
+		</audio>
+
+		<audio id="audio_button_click">
+			<source src="audio/button_click.mp3" type="audio/mpeg">
+		</audio>
+
+		<audio id="audio_msgbox">
+			<source src="audio/msgbox.mp3" type="audio/mpeg">
+		</audio>
+
+		<section class="welcome_screen">
+			<h1>Balancing Machine App</h1>
+
+			<p>
+				This app, based on given readings obtained from prepared analysis, contributes to the process of balancing machine:
+				determining the location and amount of unbalanced masses on a rotor.
+				<br><br>
+				Give required data to the app and watch it do all the work for you:
+				calibration weight, correction weight, vibration comparison in tables and charts, polar graph, single-plane balancing calculator
+				and double-plane balancing calculator.
+				<br><br>
+				All you do is entering data, nothing else, no joke. In addition, we realize the importance of your time, so we designed an auto-writer
+				for your report. It writes most of your report as you work, you can give it a final look then print it.
+				<br><br>
+				Moreover, it purposely takes a step-by-step-like design to simplify the whole process. Making it user-friendly was a design goal.
+				<br><br>
+				Based on feedback from several engineers who tested the app before release, the app is proven to help you finish more work in
+				much less time with less effort.
+			</p>
+
+			<div class="welcome_button">Get to work <i style="margin-left: 5%;" class="fa fa-gears"></i></div>
+		</section>
+
+		<div id="body_wrapper">
+			<div class="message_box">
+				<i class="message_box_close fa fa-close"></i>
+				<div class="message_box_body"></div>
+			</div>
+			<div class="scroller">
+				<div class="scroller_content">
+					<i class="fa fa-arrows-v"></i>
+				</div>
+			</div>
+
+			<div class="ribbon gradient_bg">
+				<img style="float: left; margin-left: 1%; margin-bottom: 0.5%;" src="img/gelogo_transparent.png" alt="General Electirc" height="50" width="50">
+				<div class="ribbon_button" onclick="window.location.reload()">New</div>
+				<div class="ribbon_button" onclick="SaveProject()">Save project</div>
+				<div class="ribbon_button" onclick="ShowProjectLoader()">Open project</div>
+				<div class="ribbon_button" onclick="ShowInfoDialog()"><i class="fa fa-question-circle"></i></div>
+
+				<div class="color_menu">
+					<span class="color orange"></span>
+					<span class="color yellow"></span>
+					<span class="color red"></span>
+					<span class="color pink"></span>
+					<span class="color blue"></span>
+					<span class="color black"></span>
+					<span class="color green"></span>
+					<span class="color brown"></span>
+				</div>
+
+				<div style="clear:both;"></div>
+
+				<div class="info_dialog">
+					<i class="info_dialog_close fa fa-close"></i>
+					<br><br>
+					<h4 style="text-align: center; text-decoration: underline;">Description</h4>
+					<p>This balancing machine app determines the location and amount of unbalanced masses on a rotor based on given inputs and readings.</p>
+					<br><br>
+					<h4 style="text-align: center; text-decoration: underline;">APPENDIX</h4>
+<p style="font-weight: bold; ext-align: left; text-decoration: underline;">Units of Measurement</p>
+<br>
+<p>Displacement:
+<p>1 Mil= 25.4 microns</p>
+<p>Velocity:</p>
+<p>1 in/sec= 25.4 mm/ sec</p>
+<br>
+<p style="font-weight: bold; text-align: left; text-decoration: underline;">Unit Abbreviations</p>
+<p>in/s: inch per second</p>
+<p>mm/s: millimeter per second</p>
+<p>μm: micrometer</p>
+<p>pk: peak (zero-to-peak)</p>
+<p>rpm: revolution per minute</p>
+<br>
+<p style="font-weight: bold; text-align: left; text-decoration: underline;">Equations:</p>
+<p style="text-align: center; font-style: italic; font-family: Cambria,Georgia,serif;">(5- 10 %) M x g = Mu x Ru x Ω2</p>
+<p style="text-align: left; text-decoration: underline;">Where:</p>
+<p>M: 	Rotor Mass, Kg</p>
+<p>g: 	Gravity, 9.8 m/ sec2</p>
+<p>Mu: 	Calibration Mass</p>
+<p>Ru: 	Raduis of Calibration Weight</p>
+<p>Ω2: 	Angular Speed, 2πN/60</p>
+<p>N: 	Rotor Speed, RPM</p>
+<br>
+<p style="font-style: italic; font-family: Cambria,Georgia,serif;">C= (O+C)-O</p>
+<p>Influence Vector <i style="font-style: italic; font-family: Cambria,Georgia,serif;">H=C/Wcal</i></p>
+<p>Correction Weight <i style="font-style: italic; font-family: Cambria,Georgia,serif;">Wcorr=N/C x Wcal = -O/C x Wcal</i></p>
+<br>
+<p style="text-align: left; text-decoration: underline;">Where:</p>
+<p>O: 	Original Unbalance Vector</p>
+<p>O+C: 	Response to the original unbalance plus the unbalance caused by the calibration weight</p>
+
+
+<h4 style="text-align: center; text-decoration: underline;">GLOSSARY</h4>
+<p style="font-weight: bold; ext-align: left; text-decoration: underline;">Balancing:</p> Adjusting the radial mass distribution of a rotor so that the mass centerline (principal inertia axis) approaches the geometric centerline resulting in a reduction in1X lateral vibration.
+<br><br><p style="font-weight: bold; ext-align: left; text-decoration: underline;">Calibration Weight Wc:</p> Used in rotor balancing. A weight of known magnitude that is attached to (or removed from) the rotor at a known physical location. When operating the machine under repeatable conditions, the resulting change in 1X vibration response vectors may be attributed to the calibration weight for a linear mechanical system. This procedure calibrates the rotor system for its susceptibility to mass unbalance. This weight is often called a trial weight.
+<br><br><p style="font-weight: bold; ext-align: left; text-decoration: underline;">Critical Speed(s):</p> Any shaft rotative speed associated with high vibration amplitudes. Often, the speed corresponds to a rotor lateral mode resonance frequency excited by rotor unbalance (also known as balance resonance speed).
+<br><br><p style="font-weight: bold; ext-align: left; text-decoration: underline;">Influence Vector H:</p> Used in balancing, the resulting 1X vibration vector (amplitude and phase) due to a calibration weight divided by the calibration weight vector, at a particular shaft rotative speed. The measured vibration vector divided by the unbalance force vector represents the rotors unbalance transfer function. Also known as an influence coefficient.
+<br><br><p style="font-weight: bold; ext-align: left; text-decoration: underline;">Peak-to-Peak Value:</p> The difference between positive and negative extreme values of an electronic signal or dynamic motion.
+<br><br><p style="font-weight: bold; ext-align: left; text-decoration: underline;">Root Mean Square (RMS):</p> Square root of the arithmetic mean of a set of squared instantaneous values. Used as a measure of amplitude; RMS equals 0.707 x peak (sine wave only).
+<br><br><p style="font-weight: bold; ext-align: left; text-decoration: underline;">Unbalance:</p> Unequal radial weight distribution in a rotor. A condition where the mass centerline (principal inertia axis) does not coincide with the geometric centerline of the rotor. Eccentricity of the local center of gravity from the undisturbed axis of rotation.. Also, the effective mass responsible for the rotor lateral synchronous vibration. Sometimes expressed in terms of eccentricity alone, e.g., in mils of eccentricity.
+<br><br><p style="font-weight: bold; ext-align: left; text-decoration: underline;">Unbalance Response:</p> Vibration amplitude and phase of rotor synchronous precession at a given speed, caused by dynamic forcing action of rotating mass unbalance.
+<br><br><p style="font-weight: bold; ext-align: left; text-decoration: underline;">Zero-to-Peak Value:</p> One-half of the peak-to-peak value.
+
+
+
+
+				</div>
+
+				<div id="project_loader_dropzone" class="project_loader">
+					<i class="project_loader_close fa fa-close"></i>
+					<br><br>
+
+					<h1>Select a project file </h1>
+					<input id="project_loader_fileselector" type="file" accept="text/plain">
+
+					<br><br><br><br>
+
+					<h1>Or just drag <i class="fa fa-hand-rock-o"></i> and drop <i class="fa fa-hand-stop-o"></i> it here</h1>
+					<div style="display: inline-block; width: 90%; height: 100px; border: medium dashed #AAAAAA; border-radius: 3px;">
+					</div>
+					<br><br>
+				</div>
+			</div>
+
+			<section class="report_cover">
+				<p style="text-align: left;">
+					<img style="margin-left: 10px;" src="img/gelogo.png" alt="General Electirc" height="120" width="120">
+					<p style="text-align: left; margin-left: 28px; font-size: 16pt; font-weight: bold; color: #999999;">GE Oil & Gas</p>
+					<p style="text-align: left; margin-left: 28px; font-size: 14pt; font-weight: bold;">Digital Solutions</p>
+					<p style="text-align: left; margin-left: 28px; font-size: 12pt;">Machinery Diagnostics Services</p>
+				</p>
+
+				<p style="font-weight: bold; margin-top: 38%; font-size: 16pt;">
+					<span class="report_custname"></span>
+					<br>
+					BALANCING SUMMARY REPORT
+					<br>
+					Machine Tag <span class="report_tag">0</span>
+				</p>
+
+				<p style="text-align: left; margin-top: 37%;">
+					<p style="text-align: left; margin-left: 28px; font-size: 12pt; font-weight: bold;">Prepared By</p>
+					<p class="report_engname" style="text-align: left; margin-left: 28px; font-size: 10pt;"></p>
+					<p class="report_field" style="text-align: left; margin-left: 28px; font-size: 10pt;"></p>
+					<p class="report_phone" style="text-align: left; margin-left: 28px; font-size: 10pt;"></p>
+					<p class="report_email" style="text-align: left; margin-left: 28px; font-size: 10pt;"></p>
+				</p>
+				<p style="text-align: left; margin-left: 28px; margin-top: 10%; font-size: 12pt;">
+					Report Date: <span class="report_date"></span>
+				</p>
+			</section>
+
+			<section class="section_settings">
+				<p class="section_title">Starting info</p>
+				<p class="section_sub_title instructing_title" style="margin-top:0;">The info you provide here will be used in the auto-generated report when you're done.</p>
+				<br>
+
+				<table class="section_input_table">
+					<tr>
+						<td>
+							<label class="input_label">Customer name</label>
+						</td>
+						<td>
+							<input class="input_custname" type="text" value="" onchange="OnReportCoverSettingsUpdate(this, 0)">
+						</td>
+						<td>
+							<label class="input_label">Machine tag number</label>
+						</td>
+						<td>
+							<input class="input_tag" type="text" value="0" onchange="OnReportCoverSettingsUpdate(this, 1)">
+						</td>
+						<td>
+							<label class="input_label">Number of balance planes</label>
+						</td>
+						<td>
+							<select class="input_number_of_tabs" onchange="OnSelectNumberOfTabs(this)">
+								<option value="1">1
+								<option value="2">2
+								<option value="3">3
+								<option value="4">4
+								<option value="5">5
+								<option value="6">6
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label class="input_label">Engineer name</label>
+						</td>
+						<td>
+							<input class="input_engname" type="text" value="" onchange="OnReportCoverSettingsUpdate(this, 2)">
+						</td>
+						<td>
+							<label class="input_label">Job title</label>
+						</td>
+						<td>
+							<input class="input_field" type="text" value="" onchange="OnReportCoverSettingsUpdate(this, 3)">
+						</td>
+						<td>
+							<label class="input_label">Date</label>
+						</td>
+						<td>
+							<input class="input_date" type="text" value="" onchange="OnReportCoverSettingsUpdate(this, 4)">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label class="input_label">Phone</label>
+						</td>
+						<td>
+							<input class="input_phone" type="text" value="" onchange="OnReportCoverSettingsUpdate(this, 5)">
+						</td>
+						<td>
+							<label class="input_label">Email</label>
+						</td>
+						<td>
+							<input class="input_email" type="text" value="" onchange="OnReportCoverSettingsUpdate(this, 6)">
+						</td>
+						<td>
+							<div class="config_naming_button" onclick="ShowNamingConfigBox()">
+								<i class="fa fa-gear"></i> Rename balance planes
+							</div>
+						</td>
+					</tr>
+				</table>
+			</section>
+
+			<div class="naming_config_container">
+				<i class="fa fa-check-square-o close_naming_config" onclick="HideNamingConfigBox()"></i>
+				<div class="naming_config">
+					<table class="naming_config_table">
+					</table>
+				</div>
+			</div>
+
+			<div class="nav_tabs gradient_bg">
+			</div>
+
+			<section class="section_input">
+				<p class="section_title bearing_title">Bearing 1</p>
+
+				<p class="section_sub_title instructing_title" style="margin-top:0;">Fundamental data & readings based on prepared analysis</p>
+				<br>
+
+				<table class="section_input_table">
+					<tr>
+						<td>
+							<label class="input_label">Machine type</label>
+						</td>
+						<td>
+							<select class="input_machine_type" onchange="OnMachineTypeSelected(this)">
+								<option value="0">Slow ramping 10%
+								<option value="1">Fast ramping 5%
+							</select>
+						</td>
+						<td>
+							<label class="input_label">Machine running mode</label>
+						</td>
+						<td>
+							<select class="input_runningmode" onchange="OnRunningModeChange(this)">
+								<option value="0">Well below critical
+								<option value="1">At critical
+								<option value="2">Well above critical
+							</select>
+						</td>
+						<td>
+							<label class="input_label">Rotor weight</label>
+						</td>
+						<td>
+							<input class="input_rotor_weight" type="text" value="100" onchange="OnRotorWeightChange(this, true)" onkeydown="OnRotorWeightChange(this, false)" onpaste="OnRotorWeightChange(this, false)" onkeydown="return AllowOnlyNumbers()">
+							<label class="unit_label">kg</label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label class="input_label">Balance plane radius</label>
+						</td>
+						<td>
+							<input class="input_bp_radius" type="text" value="0.5" onchange="OnBPRadiusChange(this, true)" onkeydown="OnBPRadiusChange(this, false)" onpaste="OnBPRadiusChange(this, false)" onkeydown="return AllowOnlyNumbers()">
+							<label class="unit_label">meter</label>
+						</td>
+						<td>
+							<label class="input_label">Speed</label>
+						</td>
+						<td>
+							<input class="input_speed" type="text" value="3000" onchange="OnSpeedChange(this, true)" onkeydown="OnSpeedChange(this, false)" onpaste="OnSpeedChange(this, false)" onkeydown="return AllowOnlyNumbers()">
+							<label class="unit_label">RPM</label>
+						</td>
+						<td>
+							<label class="input_label">Measurement type</label>
+						</td>
+						<td>
+							<select class="input_measurement_type" onchange="OnMeasurementTypeSelected(this)">
+								<option value="0">Displacment
+								<option value="1">Velocity
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label class="input_label">Unit</label>
+						</td>
+						<td>
+							<select class="input_unit velocity_unit" onchange="OnUnitSelected(this)">
+								<option value="0">in/s RMS
+								<option value="1">mm/s RMS
+								<option value="2">in/s PK
+								<option value="3">mm/s PK
+							</select>
+							<select class="input_unit displacement_unit" onchange="OnUnitSelected(this)">
+								<option value="0">mils PP
+								<option value="1">microns PP
+							</select>
+						</td>
+						<td>
+							<label class="input_label">Balance weight</label>
+						</td>
+						<td>
+							<select class="input_balanceweight balance_weight_unit" onchange="OnBalanceWeightChange(this)">
+								<option value="0">Gram
+								<option value="1">Kilogram
+							</select>
+						</td>
+						<td>
+							<label class="input_label">Direction of rotation</label>
+						</td>
+						<td>
+							<select class="input_clockwise" onchange="OnDirectionChange(this)">
+								<option value="0">Clockwise
+								<option value="1">Counter-clockwise
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="input_scale_container">
+							<label class="input_label">Polar scale</label>
+						</td>
+						<td>
+							<input class="input_scale" type="text" value="10" onchange="OnScaleChange(this, true)" onkeydown="OnScaleChange(this, false)" onpaste="OnScaleChange(this, false)" onkeydown="return AllowOnlyNumbers()">
+							<label class="unit_label setpoint_scale_unit">mils PP</label>
+						</td>
+						<td>
+							<label class="input_label">Alarm set point</label>
+						</td>
+						<td>
+							<input class="input_alarm" type="text" value="4" onchange="OnAlarmChange(this, true)" onkeydown="OnAlarmChange(this, false)" onpaste="OnAlarmChangess(this, false)" onkeydown="return AllowOnlyNumbers()">
+							<label class="unit_label setpoint_scale_unit">mils PP</label>
+						</td>
+						<td>
+							<label class="input_label">Danger set point</label>
+						</td>
+						<td>
+							<input class="input_danger" type="text" value="7" onchange="OnDangerChange(this, true)" onkeydown="OnDangerChange(this, false)" onpaste="OnDangerChange(this, false)" onkeydown="return AllowOnlyNumbers()">
+							<label class="unit_label setpoint_scale_unit">mils PP</label>
+						</td>
+					</tr>
+					<tr>
+						<td class="input_inherit_container">
+							<label class="input_label">Import data from another balance plane</label>
+						</td>
+						<td>
+							<select class="input_inherit" onchange="OnInheritBearingData(this)"></select>
+						</td>
+					</tr>
+				</table>
+
+				<div class="input_done_button customization_button hvr-radial-out">Done, start balancing <i class="icon fa fa-balance-scale"></i></div>
+			</section>
+
+			<section class="section_tableofcontent">
+				<div style="display: inline-block; width: 70%;">
+					<p style="margin-top: 25%; font-size: 16pt;">TABLE OF CONTENTS</p>
+
+					<br><br>
+					<table style="width: 100%; text-align: left; font-weight: bold; font-size: 14pt;">
+						<tr>
+							<th colspan="6"></th>
+							<td style="font-size:10pt; padding-bottom:12px;">PAGES</td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<p>INTRODUCTION AND PROJECT SCOPE</p>
+							</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<p>EXECUTIVE SUMMARY</p>
+							</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<p>CONCLUSION</p>
+							</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<p>SPECIFIC RECOMMENDATIONS</p>
+							</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<p>VIBRATION COMPARISON</p>
+							</td>
+							<td>2</td>
+						</tr>
+						<tr>
+							<td colspan="6"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td colspan="6"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td colspan="6"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td colspan="6"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td colspan="6"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<p>Appendix A - Balancing Work Documentation</p>
+							</td>
+							<td>3</td>
+						</tr>
+					</table>
+				</div>
+			</section>
+
+			<section class="section_writings">
+				<div class="hidden_writings_container">
+				<p class="section_sub_title" style="margin-bottom: 1%;">INTRODUCTION and PROJECT SCOPE</p>
+				<textarea class="hidden_writing">"Customer Name" invited GE’s Machinery Diagnostic Services team to perform vibration measurements during "solo run test for the motor" of "Machine Tag" installed in "Customer Name" Plant, "Area", "Country".
+
+The unit is an induction motor manufactured by "…….." Proximity probes are installed on the motor IB and OB bearings (45° Right and Left). The data collection was carried out using ADRE408 with reference to an existing KEYPHASOR™. Alarm and danger setpoints are "alarm value, danger value" Mils P- P respectively.
+
+The scope of the job is defined by the following objectives:
+
+	1.	Collect steady state & transient data.
+	2.	Analyze the vibration data and assess the machine condition.
+	3.	Provide recommendations on further action as and if necessary.
+	4.	Conduct balancing exercise as needed.
+
+</textarea>
+				<br>
+				<p class="section_sub_title" style="margin-bottom: 1%;">EXECUTIVE SUMMARY</p>
+				<textarea class="hidden_writing">The high shaft vibration observed on motor inboard bearing was mainly due to motor shaft residual unbalance. The rotor was balanced by adding a total mass of "Correction Weight" on the coupling hub for to reduce the high vibration vectors at full speed. The shaft vibration was reduced to acceptable limits well below alarm as shown in below table & graph.
+				</textarea>
+				<br>
+				<p class="section_sub_title" style="margin-bottom: 1%;">CONCLUSION</p>
+				<textarea class="hidden_writing">Based on a detailed evaluation of the acquired information, it is concluded that:
+	•	High vibration levels observed at motor inboard bearing is due to residual unbalance.
+	•	In-situ balancing reduced vibration levels at motor IB bearing to values well below alarm limit (decreased from ~ 3.6 to 1 Mils P- P at full speed).
+
+</textarea>
+				<br>
+				<p class="section_sub_title" style="margin-bottom: 1%;">SPECIFIC RECOMMENDATIONS</p>
+				<textarea class="hidden_writing">NA.</textarea>
+			</div>
+			</section>
+
+			<section class="drawing">
+				<p class="balancing_calc_hidden_title">Appendix A - Balancing Work Documentation</p>
+				<p class="section_title bearing_title">Bearing 1</p>
+
+				<p class="section_sub_title instructing_title" style="margin-top:0;">The balancing process takes place here</p>
+
+				<div style="margin-bottom:3%;">
+					<div class="customization_button hvr-bounce-to-top plane_grid_view">Grid view <i class="icon fa fa-th-large"></i></div>
+					<div class="customization_button hvr-bounce-to-top plane_list_view">List view <i class="icon fa fa-th-list"></i></div>
+					<div class="customization_button hvr-bounce-to-top change_plane_settings">Data input <i class="icon fa fa-gears"></i></div>
+				</div>
+
+				<div class="plane_single_axis plane_x">
+					<p class="section_sub_title plane_axis_title">X-axis</p>
+					<br>
+
+					<canvas class="draw draw_x papers" width="50" height="50">
+					</canvas>
+
+					<table class="plane_settings_container">
+						<tr>
+							<td><label class="input_label">Sensor orientation</label></td>
+							<td><input class="input_sensor_angle_offset" type="text" value="0" onchange="OnSensorAngleChange(this, 0, true)" onkeydown="OnSensorAngleChange(this, 0, false)" onpaste="OnSensorAngleChange(this, 0, false)" onkeydown="return AllowOnlyNumbers()">
+							to
+							<select class="input_sensor_direction" onchange="OnSensorDirectionChange(this, 0)">
+								<option value="0">Left
+								<option value="1">Right
+							</select></td>
+						</tr>
+						<tr>
+							<td><label class="input_label">O vector <i class="fa fa-long-arrow-right" style="color:red;"></i></label></td>
+							<td>
+								<input class="input_O_length" type="text" value="0" onchange="OnOLengthChange(this, 0, true)" onkeydown="OnOLengthChange(this, 0, false)" onpaste="OnOLengthChange(this, 0, false)" onkeydown="return AllowOnlyNumbers()">
+								<i>@</i>
+								<input class="input_O_angle" type="text" value="0" onchange="OnOAngleChange(this, 0, true)" onkeydown="OnOAngleChange(this, 0, false)" onpaste="OnOAngleChange(this, 0, false)" onkeydown="return AllowOnlyNumbers()">
+							</td>
+						</tr>
+						<tr>
+							<td class="advisable_calib_weight" colspan="2">
+								<i class="fa fa-warning"></i> Calibration weight should be
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="input_label">Calibration weight <i class="fa fa-circle" style="color:#555555;"></i></label>
+							</td>
+							<td>
+								<input class="input_calib_weight" type="text" value="0" onchange="OnCalibWeightMChange(this, 0, true)" onkeydown="OnCalibWeightMChange(this, 0, false)" onpaste="OnCalibWeightMChange(this, 0, false)" onkeydown="return AllowOnlyNumbers()">
+								<label class="unit_label calib_weight_unit">gram</label>
+								<i>@</i>
+								<input class="input_calib_angle" type="text" value="0" onchange="OnCalibWeightAChange(this, 0, true)" onkeydown="OnCalibWeightAChange(this, 0, false)" onpaste="OnCalibWeightAChange(this, 0, false)" onkeydown="return AllowOnlyNumbers()">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="input_label">O+C vector <i class="fa fa-long-arrow-right" style="color:blue;"></i></label>
+							</td>
+							<td>
+								<input class="input_OC_length" type="text" value="0" onchange="OnOCLengthChange(this, 0, true)" onkeydown="OnOCLengthChange(this, 0, false)" onpaste="OnOCLengthChange(this, 0, false)" onkeydown="return AllowOnlyNumbers()">
+								<i>@</i>
+								<input class="input_OC_angle" type="text" value="0" onchange="OnOCAngleChange(this, 0, true)" onkeydown="OnOCAngleChange(this, 0, false)" onpaste="OnOCAngleChange(this, 0, false)" onkeydown="return AllowOnlyNumbers()">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="input_label">C vector <i class="fa fa-long-arrow-right" style="color:green;"></i></label>
+							</td>
+							<td>
+								<input class="output_C_length" type="text" readonly disabled value="0">
+								<i>@</i>
+								<input class="output_C_angle" type="text" readonly disabled value="0">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="input_label">Correction weight <i class="fa fa-circle" style="color:#E66000;"></i></label>
+							</td>
+							<td>
+								<input class="output_cw_magnitude" type="text" readonly disabled value="0">
+								<i>@</i>
+								<input class="output_cw_angle" type="text" readonly disabled value="0">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="input_label">Influence vector H</label>
+							</td>
+							<td>
+								<input class="output_H_length" type="text" readonly disabled value="0">
+								<label class="unit_label vector_h_unit">Unit</label>
+								<i>@</i>
+								<input class="output_H_angle" type="text" readonly disabled value="0">
+							</td>
+						</tr>
+					</table>
+				</div>
+
+				<div class="plane_single_axis plane_y">
+					<p class="section_sub_title plane_axis_title">Y-axis</p>
+					<br>
+
+					<canvas class="draw draw_y papers" width="50" height="50">
+					</canvas>
+
+					<table class="plane_settings_container">
+						<tr>
+							<td><label class="input_label">Sensor orientation</label></td>
+							<td><input class="input_sensor_angle_offset" type="text" value="0" onchange="OnSensorAngleChange(this, 1, true)" onkeydown="OnSensorAngleChange(this, 1, false)" onpaste="OnSensorAngleChange(this, 1, false)" onkeydown="return AllowOnlyNumbers()">
+							to
+							<select class="input_sensor_direction" onchange="OnSensorDirectionChange(this, 1)">
+								<option value="0">Left
+								<option value="1">Right
+							</select></td>
+						</tr>
+						<tr>
+							<td><label class="input_label">O vector <i class="fa fa-long-arrow-right" style="color:red;"></i></label></td>
+							<td>
+								<input class="input_O_length" type="text" value="0" onchange="OnOLengthChange(this, 1, true)" onkeydown="OnOLengthChange(this, 1, false)" onpaste="OnOLengthChange(this, 1, false)" onkeydown="return AllowOnlyNumbers()">
+								<i>@</i>
+								<input class="input_O_angle" type="text" value="0" onchange="OnOAngleChange(this, 1, true)" onkeydown="OnOAngleChange(this, 1, false)" onpaste="OnOAngleChange(this, 1, false)" onkeydown="return AllowOnlyNumbers()">
+							</td>
+						</tr>
+						<tr>
+							<td class="advisable_calib_weight" colspan="2">
+								<i class="fa fa-warning"></i> Calibration weight should be
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="input_label">Calibration weight <i class="fa fa-circle" style="color:#555555;"></i></label>
+							</td>
+							<td>
+								<input class="input_calib_weight" type="text" value="0" onchange="OnCalibWeightMChange(this, 1, true)" onkeydown="OnCalibWeightMChange(this, 1, false)" onpaste="OnCalibWeightMChange(this, 1, false)" onkeydown="return AllowOnlyNumbers()">
+								<label class="unit_label calib_weight_unit">gram</label>
+								<i>@</i>
+								<input class="input_calib_angle" type="text" value="0" onchange="OnCalibWeightAChange(this, 1, true)" onkeydown="OnCalibWeightAChange(this, 1, false)" onpaste="OnCalibWeightAChange(this, 1, false)" onkeydown="return AllowOnlyNumbers()">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="input_label">O+C vector <i class="fa fa-long-arrow-right" style="color:blue;"></i></label>
+							</td>
+							<td>
+								<input class="input_OC_length" type="text" value="0" onchange="OnOCLengthChange(this, 1, true)" onkeydown="OnOCLengthChange(this, 1, false)" onpaste="OnOCLengthChange(this, 1, false)" onkeydown="return AllowOnlyNumbers()">
+								<i>@</i>
+								<input class="input_OC_angle" type="text" value="0" onchange="OnOCAngleChange(this, 1, true)" onkeydown="OnOCAngleChange(this, 1, false)" onpaste="OnOCAngleChange(this, 1, false)" onkeydown="return AllowOnlyNumbers()">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="input_label">C vector <i class="fa fa-long-arrow-right" style="color:green;"></i></label>
+							</td>
+							<td>
+								<input class="output_C_length" type="text" readonly disabled value="0">
+								<i>@</i>
+								<input class="output_C_angle" type="text" readonly disabled value="0">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="input_label">Correction weight <i class="fa fa-circle" style="color:#E66000;"></i></label>
+							</td>
+							<td>
+								<input class="output_cw_magnitude" type="text" readonly disabled value="0">
+								<i>@</i>
+								<input class="output_cw_angle" type="text" readonly disabled value="0">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="input_label">Influence vector H</label>
+							</td>
+							<td>
+								<input class="output_H_length" type="text" readonly disabled value="0">
+								<label class="unit_label vector_h_unit">Unit</label>
+								<i>@</i>
+								<input class="output_H_angle" type="text" readonly disabled value="0">
+							</td>
+						</tr>
+					</table>
+				</div>
+
+				<div style="clear:both;"></div>
+			</section>
+
+			<section class="section_graph">
+				<p class="section_title" style="margin-bottom: 1%;">Vibration comparison</p>
+
+				<div class="data_selection">
+					<p class="section_sub_title" style="margin-top:0;">Select balance planes that you want to include in the graph & table below for comparison</p>
+
+					<br>
+
+					<div class="table_graph_checkboxes_container">
+					</div>
+				</div>
+
+				<div style="clear:both;"></div>
+
+				<table class="graph_table">
+				</table>
+
+				<table class="graph_config_table">
+					<td>
+						<label class="input_label">Graph step size</label>
+					</td>
+					<td>
+						<input class="input_stepsize" type="text" value="2" onchange="OnStepSizeChange(this, true)" onkeydown="OnStepSizeChange(this, false)" onpaste="OnStepSizeChange(this, false)" onkeydown="return AllowOnlyNumbers()">
+					</td>
+					<td>
+						<label class="input_label">Maximum step</label>
+					</td>
+					<td>
+						<input class="input_maxstep" type="text" value="7" onchange="OnMaxStepChange(this, true)" onkeydown="OnMaxStepChange(this, false)" onpaste="OnMaxStepChange(this, false)" onkeydown="return AllowOnlyNumbers()">
+					</td>
+				</table>
+
+				<div class="graph_container papers">
+					<div class="graph_instructions">
+						<span>Before (O) <i class="fa fa-square" style="margin-left: 0.5%; color: rgba(232, 28, 28, 0.8); font-size: 240%;"></i></span>
+						<span>After (O+C) <i class="fa fa-square" style="margin-left: 0.5%; color: rgba(28, 31, 232, 0.8); font-size: 240%;"></i></span>
+					</div>
+
+					<canvas class="graph" width="50" height="50">
+					</canvas>
+				</div>
+			</section>
+
+			<section class="section_editing">
+				<p class="section_title" style="margin-bottom: 1%;">Edit your report</p>
+
+				<p class="section_sub_title summary_title" style="margin-bottom: 1%;">Introduction</p>
+				<br>
+				<textarea class="summary" maxlength="1024" onchange="OnEditing(this, 0)">"Customer Name" invited GE’s Machinery Diagnostic Services team to perform vibration measurements during "solo run test for the motor" of "Machine Tag" installed in "Customer Name" Plant, "Area", "Country".
+
+The unit is an induction motor manufactured by "…….." Proximity probes are installed on the motor IB and OB bearings (45° Right and Left). The data collection was carried out using ADRE408 with reference to an existing KEYPHASOR™. Alarm and danger setpoints are "alarm value, danger value" Mils P- P respectively.
+
+The scope of the job is defined by the following objectives:
+
+	1.	Collect steady state & transient data.
+	2.	Analyze the vibration data and assess the machine condition.
+	3.	Provide recommendations on further action as and if necessary.
+	4.	Conduct balancing exercise as needed.
+</textarea>
+
+				<p class="section_sub_title summary_title" style="margin-bottom: 1%;">Executive summary</p>
+				<br>
+				<textarea class="summary" maxlength="1024" onchange="OnEditing(this, 1)">The high shaft vibration observed on motor inboard bearing was mainly due to motor shaft residual unbalance. The rotor was balanced by adding a total mass of "Correction Weight" on the coupling hub for to reduce the high vibration vectors at full speed. The shaft vibration was reduced to acceptable limits well below alarm as shown in below table & graph.</textarea>
+
+				<p class="section_sub_title summary_title" style="margin-bottom: 1%;">Conclusion</p>
+				<br>
+				<textarea class="summary" maxlength="1024" onchange="OnEditing(this, 2)">Based on a detailed evaluation of the acquired information, it is concluded that:
+	•	High vibration levels observed at motor inboard bearing is due to residual unbalance.
+	•	In-situ balancing reduced vibration levels at motor IB bearing to values well below alarm limit (decreased from ~ 3.6 to 1 Mils P- P at full speed).
+</textarea>
+
+				<p class="section_sub_title summary_title" style="margin-bottom: 1%;">Specific recommendations</p>
+				<br>
+				<textarea class="summary" maxlength="1024" onchange="OnEditing(this, 3)">Touch to edit this text area!</textarea>
+			</section>
+
+			<section class="section_export">
+				<p class="section_title">Exporting</p>
+
+				<div style="margin-bottom:7%; margin-top:2%;">
+					<div class="customization_button hvr-bounce-to-top" onclick="ExportPrint()">Generate summary report <i class="icon fa fa-print"></i></div>
+					<div class="customization_button hvr-bounce-to-top" onclick="ShowIMGExporter()">Printable screenshots <i class="icon fa fa-camera"></i></div>
+					<div class="customization_button hvr-bounce-to-top" onclick="SaveProject()">Save project <i class="icon fa fa-save"></i></div>
+				</div>
+
+				<div class="img_exporter">
+					<i class="img_exporter_close fa fa-close"></i>
+					<br><br>
+					<h1>Take a screenshot of</h1>
+
+					<ul>
+						<li onclick="ExportIMG(0)">Balance plane configuration</li>
+						<li onclick="ExportIMG(1)">Polar X</li>
+						<li onclick="ExportIMG(2)">Polar Y</li>
+						<li onclick="ExportIMG(3)">X and Y</li>
+						<li onclick="ExportIMG(4)">Vibration comparison</li>
+					</ul>
+				</div>
+			</section>
+
+			<footer>
+				2017 © All Rights Reserved.
+			</footer>
+		</div>
+	</body>
+
+	<script src="js/welcome.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/responsive.js"></script>
+	<script src="js/customize.js"></script>
+	<!--script src="js/export.js"></script>
+	<script src="js/project.js"></script-->
+	<script src="js/trial.js"></script>
+	<script src="js/workspaces_names.js"></script>
+	<script src="js/report_cover.js"></script>
+
+</html>

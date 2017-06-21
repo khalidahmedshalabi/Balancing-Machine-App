@@ -1,0 +1,232 @@
+@page {
+    margin: 0;
+    size: A4 portrait;
+}
+
+@media print
+{
+    body
+    {
+        color: black !important;
+        background-color: white !important;
+    }
+
+    section
+    {
+        border: 0;
+    }
+
+    .report_cover
+    {
+        display: block;
+        page-break-after: always;
+    }
+
+    .section_input, .section_settings, .ribbon, .customization_button, .graph_config, .data_selection, .nav_tabs, footer, .section_export, .scroller
+    {
+        display: none !important;
+    }
+
+    .input_inherit_container, .input_scale_container, .message_box, .instructing_title
+    {
+        display: none !important;
+    }
+
+    .drawing, .section_graph, .section_writings
+    {
+        page-break-before: always;
+    }
+
+    input[type="text"], select
+    {
+        font-family: arial !important;
+        color: black !important;
+    }
+
+    .papers, .graph_container, .draw
+    {
+        -webkit-box-shadow: none !important;
+        -moz-box-shadow: none !important;
+        box-shadow: none !important;
+    }
+
+    .graph
+    {
+        max-width: 100%;
+    }
+
+    .graph_table
+    {
+        border: thin solid black;
+        border-color: black !important;
+        border-radius: 1px;
+        margin-bottom: 2%;
+    }
+
+    .graph_table th
+    {
+        border: thin solid black;
+        border-color: black !important;
+        border-radius: 2px;
+    }
+
+    .graph_table td
+    {
+        border: thin solid black;
+        border-color: black !important;
+        border-radius: 2px;
+    }
+
+    .section_input
+    {
+        font-size: 65%;
+    }
+
+    .drawing label
+    {
+        font-size: 89%;
+    }
+
+    .section_input select
+    {
+        font-size: 100%;
+    }
+
+    .plane_settings_container
+    {
+        width: 100%;
+    }
+
+    .section_editing
+    {
+        display: none;
+    }
+
+    .section_writings, .section_tableofcontent
+    {
+        display: block;
+    }
+
+    .balancing_calc_hidden_title
+    {
+        display: block;
+    }
+
+    select
+    {
+        /*for firefox*/
+        -moz-appearance: none;
+        /*for chrome*/
+        -webkit-appearance:none;
+    }
+
+    /*for IE10*/
+    select::-ms-expand
+    {
+        display: none;
+    }
+
+    .section_title
+    {
+        font-family: arial;
+        text-align: left;
+        font-weight: bold;
+        font-size: 14pt;
+        padding-left: 3%;
+        text-transform: uppercase;
+    }
+
+    .balancing_calc_hidden_title
+    {
+        padding-left: 3%;
+    }
+
+    .section_sub_title
+    {
+        font-family: arial;
+        font-size: 14pt;
+        text-transform: uppercase;
+    }
+
+    .section_writings .section_sub_title
+    {
+        font-family: arial;
+        text-align: left;
+        font-weight: bold;
+        font-size: 14pt;
+        text-transform: uppercase;
+        margin-top: 3%;
+    }
+
+    .section_graph .section_title
+    {
+        margin-top: 13%;
+    }
+
+    .section_graph .graph_table
+    {
+        margin-top: 10%;
+    }
+
+    .section_writings textarea
+    {
+        overflow: hidden;
+    }
+}
+
+.print_body
+{
+    color: black !important;
+    background-color: white !important;
+}
+
+.print_section
+{
+    border: 0 !important;
+}
+
+.print_input_select
+{
+    font-family: arial !important;
+    color: black !important;
+    background-color: white !important;
+}
+
+.print_papers
+{
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.print_graph
+{
+    max-width: 100%;
+}
+
+.print_graph_table
+{
+    border: thin solid black;
+    border-color: black !important;
+    border-radius: 1px;
+    margin-bottom: 2%;
+}
+
+.print_graph_table_th
+{
+    border: thin solid black;
+    border-color: black !important;
+    border-radius: 2px;
+}
+
+.print_graph_table_td
+{
+    border: thin solid black;
+    border-color: black !important;
+    border-radius: 2px;
+}
+
+.print_margin_top
+{
+    margin-top: 15%;
+}
